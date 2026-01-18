@@ -8,16 +8,16 @@ export default function Logo() {
        A 22 22 0 0 1 40 68"
                     fill="none"
                     stroke="#2F6EF6"
-                    stroke-width="8"
-                    stroke-linecap="round"
+                    strokeWidth="8"
+                    strokeLinecap="round"
                 />
                 <path
                     d="M 18 26
        A 40 40 0 0 1 58 68"
                     fill="none"
                     stroke="#2F6EF6"
-                    stroke-width="8"
-                    stroke-linecap="round"
+                    strokeWidth="8"
+                    strokeLinecap="round"
                 />
             </svg>
         </div>
