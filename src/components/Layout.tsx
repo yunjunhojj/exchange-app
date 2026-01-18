@@ -50,7 +50,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                 </div>
             </header>
 
-            <main className="max-w-[1440px] mx-auto">
+            <main className="max-w-[1440px] mx-auto pb-[50px]">
                 {children}
             </main>
         </div>
