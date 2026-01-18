@@ -1,0 +1,45 @@
+export const CURRENCY_NAME_MAP: Record<string, string> = {
+    USD: "미국 달러",
+    JPY: "일본 엔화",
+    EUR: "유로",
+    GBP: "영국 파운드",
+    CHF: "스위스 프랑",
+    CAD: "캐나다 달러",
+    AUD: "호주 달러",
+    CNY: "중국 위안",
+    HKD: "홍콩 달러",
+    SGD: "싱가포르 달러",
+    NZD: "뉴질랜드 달러",
+    SEK: "스웨덴 크로나",
+    NOK: "노르웨이 크로나",
+    DKK: "덴마크 크로네",
+    PLN: "폴란드 즈워티",
+    HUF: "헝가리 포린트",
+    CZK: "체코 코루나",
+    BRL: "브라질 헤알",
+    MXN: "멕시코 페소",
+    ZAR: "남아프리카 공화국 랜드",
+    TRY: "터키 리라",
+    INR: "인도 루피",
+    THB: "태국 바트",
+    VND: "베트남 동",
+    PHP: "필리핀 페소",
+    MYR: "말레이시아 링깃",
+    TWD: "대만 달러",
+    KRW: "대한민국 원",
+};
+
+export const CURRENCY_SYMBOL_MAP: Record<string, string> = {
+    KRW: "₩",
+    USD: "$",
+    EUR: "€",
+    JPY: "¥",
+};
+
+export const CURRENCY_EMOJI_MAP: Record<string, string> = {
+    USD: "🇺🇸",
+    JPY: "🇯🇵",
+    KRW: "🇰🇷",
+    EUR: "🇪🇺",
+    GBP: "🇬🇧",
+};

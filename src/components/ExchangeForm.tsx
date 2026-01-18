@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { getErrorMessage } from "../lib/constants/error-codes";
+import { CURRENCY_EMOJI_MAP } from "../lib/constants/currency";
 import { useOrderQuoteMutation, useCreateOrderMutation } from "../lib/queries";
 import type { ExchangeRateResponse } from "../lib/api";
 import { Loader2, ChevronDown } from "lucide-react";
@@ -235,9 +236,4 @@ export default function ExchangeForm({ rates }: ExchangeFormProps) {
             </form>
         </div>
     );
-}
-
-const CURRENCY_EMOJI_MAP = {
-    USD: "🇺🇸",
-    JPY: "🇯🇵",
 }

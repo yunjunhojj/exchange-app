@@ -1,4 +1,5 @@
 import type { WalletResponse } from "../lib/api";
+import { CURRENCY_SYMBOL_MAP } from "../lib/constants/currency";
 
 interface WalletStatusProps {
     totalKrwBalance: number;
@@ -35,9 +36,4 @@ export default function WalletStatus({ totalKrwBalance, wallets }: WalletStatusP
     );
 }
 
-const CURRENCY_SYMBOL_MAP = {
-    KRW: "₩",
-    USD: "$",
-    EUR: "€",
-    JPY: "¥",
-}
+
