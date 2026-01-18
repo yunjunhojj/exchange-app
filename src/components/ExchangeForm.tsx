@@ -82,8 +82,14 @@ export default function ExchangeForm({ rates }: ExchangeFormProps) {
                     queryClient.invalidateQueries({ queryKey: ["wallets"] });
                 },
                 onError: (err: any) => {
-                    if (err.response && err.response.data && err.response.data.message) {
-                        setError(err.response.data.message);
+                    const errorCode = err.response?.data?.code;
+                    const errorMessage = err.response?.data?.message;
+
+                    if (errorCode === "EXCHANGE_RATE_MISMATCH") {
+                        queryClient.invalidateQueries({ queryKey: ["exchangeRates"] });
+                        setError("환율이 변동되었습니다. 새로운 환율로 다시 시도해주세요.");
+                    } else if (errorMessage) {
+                        setError(errorMessage);
                     } else {
                         setError("환전 실패. 다시 시도해주세요.");
                     }
