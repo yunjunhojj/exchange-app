@@ -40,3 +40,10 @@ export const useCreateOrderMutation = () => {
         },
     });
 };
+
+export const useOrderHistory = () => {
+    return useSuspenseQuery({
+        queryKey: ["orders"],
+        queryFn: () => orderApi.getOrders(),
+    });
+};
