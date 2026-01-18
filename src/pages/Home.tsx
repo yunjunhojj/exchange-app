@@ -9,9 +9,9 @@ export default function Home() {
     const { data: walletData } = useWalletSummary();
     const { data: ratesData } = useExchangeRates();
 
-    const wallets = walletData.data?.data?.wallets || [];
-    const totalKrwBalance = walletData.data?.data?.totalKrwBalance || 0;
-    const rates = ratesData.data?.data || [];
+    const wallets = walletData.data.data?.wallets || [];
+    const totalKrwBalance = walletData.data.data?.totalKrwBalance || 0;
+    const rates = ratesData.data.data || [];
 
     return (
         <Layout>

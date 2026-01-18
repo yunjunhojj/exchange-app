@@ -1,8 +1,16 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Suspense } from "react";
+import { Loader2 } from "lucide-react";
 import Login from "./pages/Login";
 import { isAuthenticated } from "./lib/auth";
 import Home from "./pages/Home";
 import History from "./pages/History";
+
+const LoadingFallback = () => (
+  <div className="h-screen w-full flex items-center justify-center bg-gray-50">
+    <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
+  </div>
+);
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   if (!isAuthenticated()) {
@@ -18,8 +26,6 @@ const LoginPageWrapper = () => {
   return <Login />;
 };
 
-
-
 function App() {
   return (
     <BrowserRouter>
@@ -29,7 +35,9 @@ function App() {
           path="/"
           element={
             <ProtectedRoute>
-              <Home />
+              <Suspense fallback={<LoadingFallback />}>
+                <Home />
+              </Suspense>
             </ProtectedRoute>
           }
         />
@@ -37,7 +45,9 @@ function App() {
           path="/history"
           element={
             <ProtectedRoute>
-              <History />
+              <Suspense fallback={<LoadingFallback />}>
+                <History />
+              </Suspense>
             </ProtectedRoute>
           }
         />
