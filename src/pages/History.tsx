@@ -37,13 +37,13 @@ export default function History() {
                                     <td className="py-6 pl-10 font-medium text-[#333D4B]">{order.orderId}</td>
                                     <td className="w-[180px] py-6 font-medium text-[#333D4B]">{formatDate(order.orderedAt)}</td>
                                     <td className="py-6 text-right font-medium text-[#333D4B]">
-                                        {order.fromAmount.toLocaleString()} {order.fromCurrency}
+                                        {order.toAmount.toLocaleString()} {order.toCurrency}
                                     </td>
                                     <td className="py-6 text-right font-medium text-[#333D4B]">
                                         {order.appliedRate.toLocaleString()}
                                     </td>
                                     <td className="py-6 pr-10 text-right font-medium text-[#333D4B]">
-                                        {order.toAmount.toLocaleString()} {order.toCurrency}
+                                        {order.fromAmount.toLocaleString()} {order.fromCurrency}
                                     </td>
                                 </tr>
                             ))}
