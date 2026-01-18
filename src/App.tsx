@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import { isAuthenticated } from "./lib/auth";
+import Home from "./pages/Home";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   if (!isAuthenticated()) {
@@ -9,21 +10,20 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
-
-const Home = () => {
-  return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold">환전 페이지 (Protected)</h1>
-      <p>로그인에 성공하셨습니다.</p>
-    </div>
-  );
+const LoginPageWrapper = () => {
+  if (isAuthenticated()) {
+    return <Navigate to="/" replace />;
+  }
+  return <Login />;
 };
+
+
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<LoginPageWrapper />} />
         <Route
           path="/"
           element={
