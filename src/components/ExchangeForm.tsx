@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useOrderQuoteMutation, useCreateOrderMutation } from "../lib/queries";
 import type { ExchangeRateResponse } from "../lib/api";
-import { Loader2, ChevronDown, ArrowDown } from "lucide-react";
+import { Loader2, ChevronDown } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 
 interface ExchangeFormProps {
