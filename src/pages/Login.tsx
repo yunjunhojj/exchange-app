@@ -79,11 +79,11 @@ export default function Login() {
                     <div>
                         <button
                             type="submit"
-                            className="w-full py-6 text-[22px] font-bold rounded-2xl text-white bg-[#1B2334] hover:bg-[#1B2334]/80"
+                            className="h-[78px] flex items-center justify-center w-full py-6 text-[22px] leading-[133%] font-bold rounded-2xl text-white bg-[#1B2334] hover:bg-[#1B2334]/80"
                             disabled={isPending}
                         >
 
-                            {isPending ? <Loader2 className="animate-spin mr-2 h-4 w-4" /> : "로그인 하기"}
+                            {isPending ? <Loader2 className="animate-spin h-[30px] w-[30px]" /> : "로그인 하기"}
                         </button>
                     </div>
                 </form>
