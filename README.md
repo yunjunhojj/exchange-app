@@ -1,73 +1,59 @@
-# React + TypeScript + Vite
+# 환전 애플리케이션 (Exchange App)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+환전 기능을 제공하는 웹 애플리케이션입니다. React와 TypeScript를 기반으로 개발되었으며, 사용자 친화적인 UI와 에러 처리에 중점을 두었습니다.
 
-Currently, two official plugins are available:
+## 1. 실행 방법
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 요구 사항
+- Node.js (v18 이상 권장)
+- Yarn
 
-## React Compiler
+### 설치 및 실행
+```bash
+# 의존성 설치
+yarn install
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+# 개발 서버 실행
+yarn dev
 
-## Expanding the ESLint configuration
+# 테스트 실행
+yarn test
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+# 프로덕션 빌드
+yarn build
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 2. 사용된 라이브러리 및 선정 이유
 
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
+### 상태 관리 및 데이터 페칭
+- **@tanstack/react-query**: 서버 상태(환율 정보, 지갑 잔액 등)를 효율적으로 관리하고, 캐싱, 자동 리페칭(refetching), Suspense 등을 손쉽게 구현하기 위해 사용했습니다.
 
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs["recommended-typescript"],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+### 스타일링
+- **TailwindCSS**: 유틸리티 퍼스트 접근 방식으로 빠르고 일관된 디자인 시스템을 구축했습니다.
+- **clsx / tailwind-merge**: 조건부 스타일링과 클래스 병합을 안전하게 처리하기 위해 사용했습니다.
+- **lucide-react**: 깔끔하고 통일감 있는 아이콘을 사용하기 위해 선택했습니다.
+
+### 유틸리티
+- **axios**: HTTP 요청을 처리하며, 인터셉터(Interceptor)를 통해 `UNAUTHORIZED` 에러 등 공통 에러 처리를 용이하게 구현했습니다.
+- **dayjs**: 날짜 및 시간 포맷팅을 가볍고 직관적으로 처리하기 위해 사용했습니다.
+- **js-cookie**: JWT 토큰을 쿠키에 안전하게 저장하고 관리하기 위해 사용했습니다.
+
+### 테스트
+- **Vitest**: Vite 환경과 호환성이 뛰어나고 설정이 간편하며 실행 속도가 빨라 선택했습니다.
+- **@testing-library/react**: 사용자 중심의 동작(렌더링, 클릭, 입력 등)을 테스트하기 위해 사용했습니다.
+
+## 3. 특히 신경 쓴 부분
+
+### 에러 처리 (Domain Exception Handling)
+- 단순한 API 에러뿐만 아니라, **도메인 특화 예외(`DomainException`)**를 세분화하여 처리했습니다.
+- `error-codes.ts` 상수로 에러 코드를 관리하고, 사용자에게 친절한 한글 에러 메시지로 변환하여 보여줍니다.
+- `api-client.ts`에 Axios Interceptor를 적용하여, **`UNAUTHORIZED (401)` 발생 시 자동으로 토큰을 정리하고 로그인 페이지로 리다이렉트**되도록 구현하여 보안과 사용자 경험을 개선했습니다.
+
+### 사용자 경험 (UX) 및 Suspense 적용
+- **`useSuspenseQuery`와 `Suspense` 도입**: 데이터 로딩 시 깜빡임을 방지하고, 자연스러운 로딩 스피너(`LoadingFallback`)를 보여주어 앱이 멈춘 것처럼 보이지 않게 했습니다.
+- **실시간 환율 반영**: `react-query`의 `refetchInterval` 기능을 활용해 주기적으로 최신 환율을 가져오도록 설정했습니다.
+- **반응형 UI**: 입금/출금(Sell/Buy) 모드 전환 시 UI가 즉각적으로 반응하며, 입력값에 따라 실시간으로 견적을 조회(Debounce 적용)합니다.
+
+### 코드 품질 및 유지보수성
+- **상수 분리**: 환율 정보(`CURRENCY_NAME`, `SYMBOL`, `EMOJI`)와 에러 코드를 별도 파일로 분리하여 유지보수를 용이하게 했습니다.
+- **테스트 코드 작성**: 핵심 로직인 환전 폼(`ExchangeForm`)과 에러 메시지 매핑 로직에 대해 **단위 테스트 및 컴포넌트 테스트**를 작성하여 안정성을 확보했습니다.
