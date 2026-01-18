@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import { isAuthenticated } from "./lib/auth";
 import Home from "./pages/Home";
+import History from "./pages/History";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   if (!isAuthenticated()) {
@@ -29,6 +30,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Home />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/history"
+          element={
+            <ProtectedRoute>
+              <History />
             </ProtectedRoute>
           }
         />

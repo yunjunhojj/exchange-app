@@ -1,10 +1,14 @@
-import { useState, type ReactNode } from "react";
-import { useNavigate } from "react-router-dom";
+import { type ReactNode } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { removeAuthToken } from "../lib/auth";
 
 export default function Layout({ children }: { children: ReactNode }) {
-    const [tab, setTab] = useState<"exchange" | "history">("exchange");
     const navigate = useNavigate();
+    const location = useLocation();
+
+    // Determine active tab based on current path
+    const isExchangeActive = location.pathname === "/";
+    const isHistoryActive = location.pathname === "/history";
 
     const handleLogout = () => {
         removeAuthToken();
@@ -12,7 +16,7 @@ export default function Layout({ children }: { children: ReactNode }) {
     };
 
     const tabBase =
-        "px-3 py-2 text-[20px] transition-colors duration-150";
+        "px-3 py-2 text-[20px] transition-colors duration-150 cursor-pointer";
     const tabActive = "font-bold text-[#36414C]";
     const tabInactive = "font-semibold text-[#8899AA] hover:text-[#36414C]";
     const tabGap = "ml-2";
@@ -28,14 +32,14 @@ export default function Layout({ children }: { children: ReactNode }) {
 
                         <div className="flex items-center">
                             <button
-                                onClick={() => setTab("exchange")}
-                                className={`${tabBase} ${tab === "exchange" ? tabActive : tabInactive}`}
+                                onClick={() => navigate("/")}
+                                className={`${tabBase} ${isExchangeActive ? tabActive : tabInactive}`}
                             >
                                 환전 하기
                             </button>
                             <button
-                                onClick={() => setTab("history")}
-                                className={`${tabBase} ${tabGap} ${tab === "history" ? tabActive : tabInactive}`}
+                                onClick={() => navigate("/history")}
+                                className={`${tabBase} ${tabGap} ${isHistoryActive ? tabActive : tabInactive}`}
                             >
                                 환전 내역
                             </button>
