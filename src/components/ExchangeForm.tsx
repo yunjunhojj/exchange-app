@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { getErrorMessage } from "../lib/constants/error-codes";
 import { useOrderQuoteMutation, useCreateOrderMutation } from "../lib/queries";
 import type { ExchangeRateResponse } from "../lib/api";
 import { Loader2, ChevronDown } from "lucide-react";
@@ -21,7 +22,6 @@ export default function ExchangeForm({ rates }: ExchangeFormProps) {
     const quoteMutation = useOrderQuoteMutation();
     const orderMutation = useCreateOrderMutation();
 
-    // Debounce quote fetch
     useEffect(() => {
         const timer = setTimeout(() => {
             if (!amount || parseFloat(amount) <= 0) {
@@ -87,12 +87,10 @@ export default function ExchangeForm({ rates }: ExchangeFormProps) {
 
                     if (errorCode === "EXCHANGE_RATE_MISMATCH") {
                         queryClient.invalidateQueries({ queryKey: ["exchangeRates"] });
-                        setError("환율이 변동되었습니다. 새로운 환율로 다시 시도해주세요.");
-                    } else if (errorMessage) {
-                        setError(errorMessage);
-                    } else {
-                        setError("환전 실패. 다시 시도해주세요.");
                     }
+
+                    const displayMessage = getErrorMessage(errorCode, errorMessage);
+                    setError(displayMessage);
                 }
             }
         )
